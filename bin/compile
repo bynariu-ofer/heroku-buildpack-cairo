@@ -19,7 +19,8 @@ function indent() {
 function vendor() {
   binary="$1"
   path="$2"
-  ext="${path:-2}" # some binaries may not be gzipped at all (see librsvg)
+  extat=$((`echo $path|awk '{print length}'` - 2 ))
+  ext="${path:2,extat}" # some binaries may not be gzipped at all (see librsvg)
 
   echo "Fetching $binary" | indent
   mkdir -p $path
