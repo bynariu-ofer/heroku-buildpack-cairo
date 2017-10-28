@@ -19,15 +19,17 @@ function indent() {
 function vendor() {
   binary="$1"
   path="$2"
-  extat=$((`echo $path|awk '{print length}'` - 2 ))
-  ext="${path:2,extat}" # some binaries may not be gzipped at all (see librsvg)
+  extat=$((`echo $binary|awk '{print length}'` - 2 ))
+  ext="${binary:2,extat}" # some binaries may not be gzipped at all (see librsvg)
 
   echo "Fetching $binary" | indent
   mkdir -p $path
 
   if [ ext -eq "xz"]; then
+    echo "xz, not a gzip; fetching…"
     curl $binary -s -o -
   else
+    echo "regular gz, fetching…"
     curl $binary -s -o - | tar xz -C $path -f -
   fi
 
