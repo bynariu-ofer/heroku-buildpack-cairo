@@ -27,7 +27,7 @@ function vendor() {
 
   echo "extension: " $ext
   if [[ ext -eq "xz" ]]; then
-    curl $binary -s -o -
+    curl $binary -s -o - | mv $path
   else
     curl $binary -s -o - | tar xz -C $path -f -
   fi
