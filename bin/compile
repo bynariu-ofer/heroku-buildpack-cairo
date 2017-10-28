@@ -19,10 +19,16 @@ function indent() {
 function vendor() {
   binary="$1"
   path="$2"
+  ext="${path:-2}" # some binaries may not be gzipped at all (see librsvg)
 
   echo "Fetching $binary" | indent
   mkdir -p $path
-  curl $binary -s -o - | tar xz -C $path -f -
+
+  if [ ext -eq "xz"]; then
+    curl $binary -s -o -
+  else
+    curl $binary -s -o - | tar xz -C $path -f -
+  fi
 
   if [ -d "$path/bin" ]; then
     export PATH=$path/bin:$PATH
