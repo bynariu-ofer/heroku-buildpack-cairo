@@ -25,11 +25,10 @@ function vendor() {
   echo "Fetching $binary" | indent
   mkdir -p $path
 
+  echo "extension: " $ext
   if [ ext -eq "xz"]; then
-    echo "xz, not a gzip; fetching…"
     curl $binary -s -o -
   else
-    echo "regular gz, fetching…"
     curl $binary -s -o - | tar xz -C $path -f -
   fi
 
