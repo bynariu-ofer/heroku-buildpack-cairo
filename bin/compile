@@ -26,7 +26,7 @@ function vendor() {
   mkdir -p $path
 
   echo "extension: " $ext
-  if [ ext -eq "xz"]; then
+  if [[ ext -eq "xz" ]]; then
     curl $binary -s -o -
   else
     curl $binary -s -o - | tar xz -C $path -f -
