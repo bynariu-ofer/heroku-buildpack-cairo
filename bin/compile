@@ -23,14 +23,11 @@ function vendor() {
   ext="${binary:2,extat}" # some binaries may not be gzipped at all (see librsvg)
 
   echo "Fetching $binary" | indent
+  echo "extension: " $ext | indent
+
   mkdir -p $path
 
-  echo "extension: " $ext
-  if [[ ext -eq "xz" ]]; then
-    curl $binary -s -o - | tar xf -C $path -f -
-  else
-    curl $binary -s -o - | tar xz -C $path -f -
-  fi
+  curl $binary -s -o - | tar xz -C $path -f -
 
   if [ -d "$path/bin" ]; then
     export PATH=$path/bin:$PATH
