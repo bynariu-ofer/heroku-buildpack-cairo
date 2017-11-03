@@ -24,10 +24,16 @@ function vendor() {
 
   echo "Fetching $binary" | indent
   echo "extension: " $ext | indent
+  
+  case "$ext" in
+   gz) tarop=xz ;;
+   xz) tarop=xJ ;;
+   *) tarop=x ;;
+  esac
 
   mkdir -p $path
 
-  curl $binary -s -o - | tar xz -C $path -f -
+  curl $binary -L -s -o - | tar $tarop -C $path -f -
 
   if [ -d "$path/bin" ]; then
     export PATH=$path/bin:$PATH
